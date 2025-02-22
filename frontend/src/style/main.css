@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    transition: background-color .25s, color .25s;
+    color: var(--color-text);
+    background-color: #5a6171;
+    color-scheme: var(--color-scheme);
+}

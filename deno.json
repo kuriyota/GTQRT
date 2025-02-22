@@ -1,0 +1,7 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-all --watch main.ts",
+    "build": "deno compile --allow-all main.ts"
+  },
+  "nodeModulesDir": "auto"
+}
