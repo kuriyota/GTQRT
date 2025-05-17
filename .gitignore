@@ -1,6 +1,8 @@
 /node_modules
 GTQRT.exe
-/TextMap
+/TextMap/
+/Raw-TextMap/**.json
 /.vscode
 /dist
 /frontend/node_modules
+/frontend/dist

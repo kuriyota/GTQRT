@@ -5,10 +5,11 @@
   import { renderMessage } from './render'
   import { Dialog } from '@varlet/ui'
 
+  const languages = ref([])
   const is_translate = ref(false)
   const queryString = ref('云堇')
   const queryLanguage = ref('CHS')
-  const queryTranslateLanguage = ref('EN')
+  const queryTranslateLanguage = ref('CHS')
   const result = ref()
   const timeUse = ref(0)
   const result_display = ref([])
@@ -22,15 +23,14 @@
     )
   }
 
-  let apiHost = '//127.0.0.1:3000/api/query'
-  console.log(import.meta.env)
-  if (import.meta.env.PROD) {
-    apiHost = '/api/query'
+  async function getAllLangues() {
+    const res = await fetch('/api/languages')
+    languages.value = await res.json()
   }
 
-  async function query() {
+  function query() {
     querying.value = true
-    fetch('//127.0.0.1:3000/api/query', {
+    fetch('/api/query', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -41,19 +41,20 @@
         translate: is_translate.value ? queryTranslateLanguage.value : 'none'
       })
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         result.value = data.data
         timeUse.value = data.time
         querying.value = false
         currentPage.value = 1
         reduceResult(currentPage.value, pageSize.value)
       })
-      .catch(err => {
+      .catch((err) => {
         querying.value = false
       })
   }
 
+  getAllLangues()
   Dialog(
     '当前版本不支持查询阅读物和过场动画字母等（所以比如「希巴拉克的道路」之类的话查询不了），后续版本会支持'
   )
@@ -63,9 +64,8 @@
   <div class="__container">
     <div id="bar">
       <h1>原神文本速查速译</h1>
-      <h3>
-        Genshin Impact Text Quick Reference & Translate
-      </h3>
+      <h3>Genshin Impact Text Quick Reference & Translate</h3>
+      <br />
       <var-input
         variant="outlined"
         v-model="queryString"
@@ -75,10 +75,10 @@
         v-model="queryLanguage"
         placeholder="请选择查询语言">
         <var-option
-          v-for="item in LanguageMeta"
-          :key="item.lang"
-          :value="item.lang"
-          :label="item.name"></var-option>
+          v-for="item in languages"
+          :key="item"
+          :value="item"
+          :label="LanguageMeta.find((e) => e.lang == item).name"></var-option>
       </var-select>
       <var-select
         variant="outlined"
@@ -86,10 +86,10 @@
         :disabled="!is_translate"
         placeholder="要翻译的语言">
         <var-option
-          v-for="item in LanguageMeta"
-          :key="item.lang"
-          :value="item.lang"
-          :label="item.name"></var-option>
+          v-for="item in languages"
+          :key="item"
+          :value="item"
+          :label="LanguageMeta.find((e) => e.lang == item).name"></var-option>
       </var-select>
       <var-checkbox disabled>正则表达式(后续版本支持)</var-checkbox>
       <var-checkbox v-model="is_translate">翻译模式</var-checkbox>
@@ -102,12 +102,12 @@
         查找
       </var-button>
       <div>耗时 {{ timeUse || 0 }} 毫秒</div>
-      <p>注：内容来自于解包文件，更新至 5.3</p>
+      <p>注：内容来自于解包文件，更新至 5.6</p>
       <p>
         <var-link href="https://github.com/Kuriyota/GTQRT/" target="_blank">
           GitHub
         </var-link>
-        <span> | </span>
+        <span>&nbsp;|&nbsp;</span>
         <var-link href="https://space.bilibili.com/650631530" target="_blank">
           作者的 Bilibili 主页
         </var-link>
@@ -118,7 +118,7 @@
         v-model:current="currentPage"
         v-model:size="pageSize"
         :total="result?.length || 0"
-        :show-total="total => `共 ${total} 条`"
+        :show-total="(total) => `共 ${total} 条`"
         @change="reduceResult" />
       <div>
         <var-cell v-for="item in result_display" :key="item.id" border>

@@ -1,18 +1,17 @@
 [
-  {
-    "lang": "CHS",
-    "name": "简体中文"
-  },
-  {
-    "lang": "EN",
-    "name": "English"
-  },
-  {
-    "lang": "JP",
-    "name": "日本語"
-  },
-  {
-    "lang": "KR",
-    "name": "한국어"
-  }
+  { "lang": "CHS", "name": "简体中文" },
+  { "lang": "CHT", "name": "繁體中文" },
+  { "lang": "DE", "name": "Deutsch" },
+  { "lang": "EN", "name": "English" },
+  { "lang": "ES", "name": "Español" },
+  { "lang": "FR", "name": "Français" },
+  { "lang": "ID", "name": "Indonesian" },
+  { "lang": "IT", "name": "Italiano" },
+  { "lang": "JP", "name": "日本語" },
+  { "lang": "KR", "name": "한국어" },
+  { "lang": "PT", "name": "Português" },
+  { "lang": "RU", "name": "Русский" },
+  { "lang": "TH", "name": "ไทย" },
+  { "lang": "TR", "name": "Türkçe" },
+  { "lang": "VI", "name": "Tiếng Việt" }
 ]
